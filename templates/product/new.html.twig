@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adaugă Produs Nou{% endblock %}
+
+{% block body %}
+    <div class="max-w-3xl mx-auto p-6 lg:p-12">
+        <div class="bg-white shadow-2xl rounded-xl p-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">
+                Adaugă un Produs Nou
+            </h1>
+            <p class="text-gray-600 mb-8 text-center">
+                Completează detaliile noului produs.
+            </p>
+
+            <!-- Aici includem template-ul de formular, care va fi stilizat cu Tailwind -->
+            {{ include('product/_form.html.twig', {'button_label': 'Creează Produs'}) }}
+
+        </div>
+    </div>
+{% endblock %}

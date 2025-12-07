@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editează Produsul: {{ product.name }}{% endblock %}
+
+{% block body %}
+    <div class="max-w-3xl mx-auto p-6 lg:p-12">
+        <div class="bg-white shadow-2xl rounded-xl p-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">
+                Editează Produsul: <span class="text-indigo-600">{{ product.name }}</span>
+            </h1>
+
+            <!-- Aici includem template-ul de formular stilizat -->
+            {{ include('product/_form.html.twig', {'button_label': 'Salvează Modificările', 'product': product}) }}
+
+            <!-- Link de întoarcere la listă -->
+            <div class="mt-8 text-center">
+                <a href="{{ path('product_index') }}" class="text-indigo-500 hover:text-indigo-700 font-medium transition duration-150">
+                    <svg class="w-4 h-4 inline mr-1 -mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Înapoi la Catalog
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

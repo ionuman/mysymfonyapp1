@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista Produselor{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto p-6 lg:p-12 max-w-7xl">
+        <header class="text-center mb-12">
+            <h1 class="text-5xl font-extrabold text-gray-900 leading-tight">Catalogul Produselor Noastre</h1>
+            <p class="mt-4 text-xl text-gray-600">Explorează colecția noastră de articole, aduse direct din baza de date Docker.</p>
+        </header>
+
+        <!-- Sectiunea de Căutare, Buton Acasă și Buton Adaugă -->
+        <div class="mb-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+
+            <!-- Formular de Căutare -->
+            <form method="GET" action="{{ path('product_index') }}" class="w-full sm:w-2/3 lg:w-1/2">
+                <div class="flex shadow-lg rounded-lg overflow-hidden border border-gray-300">
+                    <input
+                        type="search"
+                        name="search"
+                        placeholder="Caută după nume sau descriere..."
+                        value="{{ searchTerm|default('') }}"
+                        class="w-full p-3 focus:outline-none text-gray-700"
+                    >
+                    <button type="submit" class="px-5 bg-indigo-500 text-white hover:bg-indigo-600 transition duration-150">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Butoanele de Acțiune (Acasă și Adaugă) -->
+            <div class="flex space-x-4 sm:w-auto w-full justify-end">
+
+                <!-- Butonul "Acasă" (NOU) -->
+                <a href="{{ path('app_home') }}" class="inline-flex items-center px-6 py-3 border border-indigo-500 text-indigo-600 font-bold rounded-lg shadow-xl hover:bg-indigo-50 transition duration-150 transform hover:scale-105 sm:w-auto w-full justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Acasă
+                </a>
+
+                <!-- Butonul "Adaugă Produs Nou" (Existent) -->
+                <a href="{{ path('product_new') }}" class="inline-flex items-center px-6 py-3 bg-indigo-600 text-white font-bold rounded-lg shadow-xl hover:bg-indigo-700 transition duration-150 transform hover:scale-105 sm:w-auto w-full justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    Adaugă Produs Nou
+                </a>
+            </div>
+        </div>
+
+        <div class="bg-white shadow-2xl rounded-xl p-8">
+            {% if products is empty and searchTerm %}
+                <div class="text-center py-10">
+                    <p class="text-2xl text-red-500 font-semibold">Nu am găsit rezultate.</p>
+                    <p class="text-gray-500 mt-2">Niciun produs nu se potrivește cu termenul "{{ searchTerm }}".</p>
+                    <a href="{{ path('product_index') }}" class="mt-4 inline-block text-indigo-500 hover:text-indigo-700 font-medium">
+                        Resetare căutare
+                    </a>
+                </div>
+            {% elseif products is empty %}
+                <div class="text-center py-10">
+                    <p class="text-2xl text-red-500 font-semibold">Stoc epuizat!</p>
+                    <p class="text-gray-500 mt-2">Momentan nu există produse în bază de date.</p>
+                </div>
+            {% else %}
+                <!-- Sectiunea de Grila (Grid) Responsive pentru carduri -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {% for product in products %}
+                        <!-- Card Produs (Conținutul rămâne neschimbat) -->
+                        <div class="bg-white border border-gray-300 rounded-lg shadow-2xl overflow-hidden transform hover:scale-[1.02] transition duration-300 ease-in-out flex flex-col">
+
+                            <!-- Placeholder pentru Imagine/Icon -->
+                            <div class="bg-indigo-50 h-48 flex items-center justify-center">
+                                <svg class="w-16 h-16 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-1-5h-1a2 2 0 00-2 2v2a2 2 0 002 2h1a2 2 0 002-2v-2a2 2 0 00-2-2z"></path></svg>
+                            </div>
+
+                            <div class="p-6 flex flex-col flex-grow">
+                                <!-- Numele Produsului (Link către Detalii) -->
+                                <a href="{{ path('product_show', {'id': product.id}) }}" class="text-2xl font-bold text-gray-800 mb-2 hover:text-indigo-600 transition">
+                                    {{ product.name }}
+                                </a>
+
+                                <!-- Descriere Scurtă -->
+                                <p class="mt-1 text-gray-600 flex-grow text-sm mb-4">
+                                    {{ product.description | default('Acest produs nu are o descriere detaliată disponibilă.') | slice(0, 100) ~ '...' }}
+                                </p>
+
+                                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                                    <!-- Eticheta Dimensiune (Size) -->
+                                    <span class="px-3 py-1 text-xs font-semibold text-pink-700 bg-pink-100 rounded-full shadow-md">
+                                    Dimensiune: {{ product.size }}
+                                </span>
+
+                                    <!-- Butoane de Actiuni (Edit) -->
+                                    <div class="space-x-2 flex">
+                                        <a href="{{ path('product_edit', {'id': product.id}) }}" class="text-sm text-blue-500 hover:text-blue-700 font-medium">
+                                            Edit
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

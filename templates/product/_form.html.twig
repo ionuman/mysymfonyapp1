@@ -1,0 +1,30 @@
+{% form_theme form 'product/_form.html.twig' %}
+
+{{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+
+<!-- Nume -->
+<div class="form-group">
+    {{ form_label(form.name, 'Nume Produs', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+    {{ form_widget(form.name, {'attr': {'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150'}}) }}
+    {{ form_errors(form.name) }}
+</div>
+
+<!-- Descriere -->
+<div class="form-group">
+    {{ form_label(form.description, 'Descriere', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+    {{ form_widget(form.description, {'attr': {'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 h-32'}}) }}
+    {{ form_errors(form.description) }}
+</div>
+
+<!-- Dimensiune -->
+<div class="form-group">
+    {{ form_label(form.size, 'Dimensiune (bucăți/greutate)', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+    {{ form_widget(form.size, {'attr': {'class': 'mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150'}}) }}
+    {{ form_errors(form.size) }}
+</div>
+
+<!-- Buton de Salvare (Create/Edit) -->
+<button type="submit" class="w-full py-3 px-4 border border-transparent rounded-md shadow-xl text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 transform hover:scale-[1.01]">
+    {{ button_label|default('Salvează') }}
+</button>
+{{ form_end(form) }}

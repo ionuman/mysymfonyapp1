@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Catalog Symfony{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+
+    <!-- Tailwind CSS via CDN pentru un design modern -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Setează fontul de bază și culoarea de fundal */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f9;
+        }
+    </style>
+
+    {% block stylesheets %}
+    {% endblock %}
+
+    {% block javascripts %}
+    {% endblock %}
+</head>
+<body>
+
+<!-- Navbar (Element adaugat pentru a face pagina principala mai complexa) -->
+<nav class="bg-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex">
+                <!-- Logo/Nume Aplicatie -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="{{ path('product_index') }}" class="text-2xl font-bold text-indigo-600 hover:text-indigo-800 transition duration-150">
+                        Symfony Catalog
+                    </a>
+                </div>
+                <!-- Link-uri Principale -->
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <a href="{{ path('product_index') }}" class="text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-indigo-500 text-sm font-medium">
+                        Products
+                    </a>
+                    <!-- Placeholder pentru adaugare: -->
+                    <a href="#" class="text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium transition duration-150">
+                        About Me
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Flash Messages -->
+{% for message in app.flashes('notice') %}
+    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
+        <p class="font-bold">Notificare</p>
+        <p>{{ message }}</p>
+    </div>
+{% endfor %}
+
+<!-- Continutul Paginii (Block Body) -->
+<main class="py-8">
+    {% block body %}{% endblock %}
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white p-6 mt-12">
+    <div class="max-w-7xl mx-auto text-center text-sm">
+        <p>&copy; {{ 'now'|date('Y') }} Symfony Catalog App. Toate drepturile rezervate.</p>
+        <p class="mt-1 text-gray-400">Dezvoltat cu Symfony pentru Facultatea de Stiinte.</p>
+    </div>
+</footer>
+</body>
+</html>
